@@ -203,6 +203,10 @@ def configure_autofs_sssd(fstore, statestore, autodiscover, options):
     print("Restarting sssd, waiting for it to become available.")
     wait_for_sssd()
 
+
+def nothing():
+    pass
+
 def configure_autofs(fstore, statestore, autodiscover, server, options):
     """
     fstore: the FileStore to back up files in
