@@ -19,6 +19,6 @@ jobs:
       class: RunPytest
       args:
         build_url: '{fedora-25/build_url}'
-        test_suite: test_integration/test_simple_replication.py
+        test_suite: test_integration/test_server_del.py
         template: *ci-master-f25
         timeout: 3600
