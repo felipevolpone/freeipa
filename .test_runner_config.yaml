@@ -28,6 +28,7 @@ steps:
   builddep:
   - rm -rf /var/cache/dnf/*
   - "dnf makecache || :"
+  - dnf -y install python2-tox python3-tox
   - dnf builddep -y ${builddep_opts} --spec freeipa.spec.in --best --allowerasing
   cleanup:
   - chown -R ${uid}:${gid} ${container_working_dir}
@@ -53,6 +54,8 @@ steps:
   lint:
   - make PYTHON=/usr/bin/python2 V=0 lint
   - make PYTHON=/usr/bin/python3 V=0 pylint
+  - tox -e py27
+  - tox pypi
   prepare_tests:
   - echo ${server_password} | kinit admin && ipa ping
   - cp -r /etc/ipa/* ~/.ipa/

@@ -16,38 +16,8 @@ env:
           CI_RUNNER_LOG_ARCHIVE="freeipa-ci-pr-${TRAVIS_PULL_REQUEST}-job-${TRAVIS_JOB_NUMBER}.tar.gz"
     matrix:
         - TASK_TO_RUN="lint"
+          TEST_TO_RUN="py27"
           TEST_RUNNER_CONFIG=".test_runner_config.yaml"
-        - TASK_TO_RUN="run-tests"
-          PYTHON=/usr/bin/python2
-          TEST_RUNNER_CONFIG=".test_runner_config.yaml"
-          TESTS_TO_RUN="test_xmlrpc/test_[a-k]*.py"
-        - TASK_TO_RUN="run-tests"
-          PYTHON=/usr/bin/python2
-          TEST_RUNNER_CONFIG=".test_runner_config.yaml"
-          TESTS_TO_RUN="test_cmdline
-            test_install
-            test_ipaclient
-            test_ipalib
-            test_ipapython
-            test_ipaserver
-            test_pkcs10
-            test_xmlrpc/test_[l-z]*.py"
-        - TASK_TO_RUN="run-tests"
-          PYTHON=/usr/bin/python3
-          TEST_RUNNER_CONFIG=".test_runner_config_py3_temp.yaml"
-          TESTS_TO_RUN="test_xmlrpc/test_[a-k]*.py"
-        - TASK_TO_RUN="run-tests"
-          PYTHON=/usr/bin/python3
-          TEST_RUNNER_CONFIG=".test_runner_config_py3_temp.yaml"
-          TESTS_TO_RUN="test_cmdline
-                test_install
-                test_ipaclient
-                test_ipalib
-                test_ipapython
-                test_ipaserver
-                test_pkcs10
-                test_xmlrpc/test_[l-uw-z]*.py"
-                # FIXME: add vault tests once PKI finally fixes vault
 install:
     - pip install --upgrade pip
     - pip3 install --upgrade pip
