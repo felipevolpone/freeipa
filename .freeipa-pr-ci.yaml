@@ -1,8 +1,12 @@
 topologies:
+  build: &build
+    name: build
+    cpu: 4
+    memory: 4096
   master_1repl: &master_1repl
     name: master_1repl
     cpu: 2
-    memory: 4098
+    memory: 4096
   master_1repl_1client: &master_1repl_1client
     name: master_1repl_1client
     cpu: 6
@@ -10,7 +14,7 @@ topologies:
   master_2repl_1client: &master_2repl_1client
     name: master_2repl_1client
     cpu: 2
-    memory: 4098
+    memory: 4096
 
 jobs:
   fedora-26/build:
