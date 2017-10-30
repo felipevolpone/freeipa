@@ -449,7 +449,7 @@ def main():
         port_check(options.master, tcp_ports)
 
         if udp_ports:
-            logger.info("\nThe following list of ports use UDP protocol"
+            logger.info("\nThe following list of ports use UDP protocol "
                         "and would need to be\n"
                         "checked manually:")
             for port in udp_ports:
@@ -530,6 +530,9 @@ def main():
                 if result.returncode != 0:
                     raise RuntimeError("Could not get ticket for master server: %s" %
                                         result.error_output)
+                # Now that the cred cache file is initialized,
+                # use it for the IPA API calls
+                os.environ['KRB5CCNAME'] = CCACHE_FILE
 
             try:
                 logger.info("Check RPC connection to remote master")
