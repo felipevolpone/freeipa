@@ -7,6 +7,7 @@ managment tools.
 
 FreeIPA is built on top of well known Open Source components and standard
 protocols with a very strong focus on ease of management and automation
+
 of installation and configuration tasks.
 
 FreeIPA can seamlessly integrate into an Active Directory environment via
