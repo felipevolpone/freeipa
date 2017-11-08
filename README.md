@@ -14,6 +14,7 @@ cross-realm Kerberos trust or user synchronization.
 
 ## Benefits
 
+
 FreeIPA:
 
 * Allows all your users to access all the machines with the same credentials
