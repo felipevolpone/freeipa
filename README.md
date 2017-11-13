@@ -20,6 +20,7 @@ FreeIPA:
   and security settings
 * Allows users to access personal files transparently from any machine in
   an authenticated and secure way
+
 * Uses an advanced grouping mechanism to restrict network access to services
   and files only to specific users
 * Allows central management of security mechanisms like passwords,
@@ -58,6 +59,7 @@ http://www.freeipa.org/page/Quick_Start_Guide
 ## For developers
 
 * Building FreeIPA from source
+
     * http://www.freeipa.org/page/Build
     * See the BUILD.txt file in the source root directory
 
