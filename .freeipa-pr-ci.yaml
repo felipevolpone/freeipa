@@ -31,38 +31,14 @@ jobs:
         timeout: 1800
         topology: *build
 
-  fedora-26/build2:
-    requires: []
-    priority: 100
-    job:
-      class: Build
-      args:
-        git_repo: '{git_repo}'
-        git_refspec: '{git_refspec}'
-        template: *ci-master-f26
-        topology: *build
-
-  fedora-26/simple_replication:
+  fedora-26/serverdel:
     requires: [fedora-26/build]
     priority: 50
     job:
       class: RunPytest
       args:
         build_url: '{fedora-26/build_url}'
-        test_suite: test_integration/test_simple_replication.py
-        template: *ci-master-f26
-        timeout: 3600
-        topology: *master_1repl
-
-
-  fedora-26/caless:
-    requires: [fedora-26/build]
-    priority: 50
-    job:
-      class: RunPytest
-      args:
-        build_url: '{fedora-26/build_url}'
-        test_suite: test_integration/test_caless.py::TestServerReplicaCALessToCAFull
+        test_suite: test_integration/test_server_del.py
         template: *ci-master-f26
         timeout: 3600
         topology: *master_1repl
