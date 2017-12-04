@@ -146,15 +146,13 @@ def backup(host):
 
     # Get the backup location from the command's output
     for line in result.stderr_text.splitlines():
-        prefix = ('ipa.ipaserver.install.ipa_backup.Backup: '
-                  'INFO: Backed up to ')
+        prefix = 'ipaserver.install.ipa_backup: INFO: Backed up to '
         if line.startswith(prefix):
             backup_path = line[len(prefix):].strip()
             logger.info('Backup path for %s is %s', host, backup_path)
             return backup_path
     else:
         raise AssertionError('Backup directory not found in output')
-
 
 
 class TestBackupAndRestore(IntegrationTest):
@@ -428,6 +426,7 @@ class TestBackupAndRestoreWithKRA(BaseBackupAndRestoreWithKRA):
     def test_full_backup_restore_with_vault(self):
         """backup, uninstall, restore"""
         self._full_backup_restore_with_vault(reinstall=False)
+
 
 class TestBackupReinstallRestoreWithKRA(BaseBackupAndRestoreWithKRA):
     def test_full_backup_reinstall_restore_with_vault(self):
