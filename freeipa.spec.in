@@ -25,6 +25,12 @@
 %endif
 %endif
 
+%if 0%{?with_python3}
+%global python %{__python3}
+%else
+%global python %{__python2}
+%endif
+
 # lint is not executed during rpmbuild
 # %%global with_lint 1
 %if 0%{?with_lint}
@@ -43,6 +49,7 @@
 %global samba_version 4.7.0
 %global selinux_policy_version 3.12.1-153
 %global slapi_nis_version 0.56.0-4
+%global python_ldap_version 2.4.15
 %else
 # 1.15.1-7: certauth (http://krbdev.mit.edu/rt/Ticket/Display.html?id=8561)
 %global krb5_version 1.15.1-7
@@ -52,7 +59,9 @@
 %global samba_version 2:4.7.0
 %global selinux_policy_version 3.13.1-158.4
 %global slapi_nis_version 0.56.1
+%global python_ldap_version 3.0.0
 %endif
+
 
 %define krb5_base_version %(LC_ALL=C rpm -q --qf '%%{VERSION}' krb5-devel | grep -Eo '^[^.]+\.[^.]+')
 
@@ -143,7 +152,7 @@ BuildRequires:  python-lesscpy
 # Build dependencies for makeapi/makeaci
 # makeapi/makeaci is using Python 2 only for now
 #
-BuildRequires:  python-ldap
+BuildRequires:  python2-ldap >= %{python_ldap_version}
 BuildRequires:  python2-netaddr
 BuildRequires:  python2-pyasn1
 BuildRequires:  python2-pyasn1-modules
@@ -252,7 +261,7 @@ BuildRequires:  python3-augeas
 BuildRequires:  python3-netaddr
 BuildRequires:  python3-pyasn1
 BuildRequires:  python3-pyasn1-modules
-BuildRequires:  python3-pyldap
+BuildRequires:  python3-ldap >= %{python_ldap_version}
 %endif # with_python3
 %endif # with_lint
 
@@ -261,7 +270,6 @@ BuildRequires:  python3-pyldap
 #
 %if ! %{ONLY_CLIENT}
 BuildRequires:  libcmocka-devel
-BuildRequires:  nss_wrapper
 # Required by ipa_kdb_tests
 BuildRequires:  %{_libdir}/krb5/plugins/kdb/db2.so
 %endif # ONLY_CLIENT
@@ -284,10 +292,10 @@ Requires: %{name}-client = %{version}-%{release}
 Requires: %{name}-common = %{version}-%{release}
 %if 0%{?with_python3}
 Requires: python3-ipaserver = %{version}-%{release}
-Requires: python3-pyldap >= 2.4.15
+Requires: python3-ldap >= %{python_ldap_version}
 %else
 Requires: python2-ipaserver = %{version}-%{release}
-Requires: python-ldap >= 2.4.15
+Requires: python2-ldap >= %{python_ldap_version}
 %endif
 # 1.3.7.6-1: https://bugzilla.redhat.com/show_bug.cgi?id=1488295
 Requires: 389-ds-base >= 1.3.7.6-1
@@ -304,14 +312,16 @@ Requires: httpd >= 2.4.6-31
 Requires(preun): python3
 Requires(postun): python3
 Requires: python3-gssapi >= 1.2.0-5
-Requires: python3-mod_wsgi
 Requires: python3-systemd
+Requires: python3-mod_wsgi
+Conflicts: mod_wsgi
 %else
 Requires(preun): python2
 Requires(postun): python2
 Requires: python2-gssapi >= 1.2.0-5
 Requires: python2-systemd
 Requires: mod_wsgi
+Conflicts: python3-mod_wsgi
 %endif
 Requires: mod_auth_gssapi >= 1.5.0
 # 1.0.14-3: https://bugzilla.redhat.com/show_bug.cgi?id=1431206
@@ -384,7 +394,7 @@ Requires: %{name}-server-common = %{version}-%{release}
 Requires: %{name}-common = %{version}-%{release}
 Requires: python2-ipaclient = %{version}-%{release}
 Requires: python2-custodia >= 0.3.1
-Requires: python-ldap >= 2.4.15
+Requires: python2-ldap >= %{python_ldap_version}
 Requires: python2-lxml
 Requires: python2-gssapi >= 1.2.0-5
 Requires: python2-sssdconfig
@@ -417,7 +427,7 @@ Requires: %{name}-common = %{version}-%{release}
 Requires: python3-ipaclient = %{version}-%{release}
 Requires: python3-custodia >= 0.3.1
 # we need pre-requires since earlier versions may break upgrade
-Requires(pre): python3-pyldap >= 2.4.35.1-2
+Requires(pre): python3-ldap >= %{python_ldap_version}
 Requires: python3-lxml
 Requires: python3-gssapi >= 1.2.0
 Requires: python3-sssdconfig
@@ -540,11 +550,11 @@ Requires: %{name}-common = %{version}-%{release}
 %if 0%{?with_python3}
 Requires: python3-gssapi >= 1.2.0-5
 Requires: python3-ipaclient = %{version}-%{release}
-Requires: python3-pyldap
+Requires: python3-ldap >= %{python_ldap_version}
 %else
 Requires: python2-gssapi >= 1.2.0-5
 Requires: python2-ipaclient = %{version}-%{release}
-Requires: python-ldap
+Requires: python2-ldap >= %{python_ldap_version}
 %endif
 Requires: cyrus-sasl-gssapi%{?_isa}
 Requires: ntp
@@ -721,7 +731,7 @@ Requires: python2-six
 # 0.4.2: Py3 fix https://bugzilla.redhat.com/show_bug.cgi?id=1476150
 Requires: python2-jwcrypto >= 0.4.2
 Requires: python2-cffi
-Requires: python-ldap >= 2.4.15
+Requires: python2-ldap >= %{python_ldap_version}
 Requires: python2-requests
 Requires: python2-dns >= 1.15
 Requires: python2-enum34
@@ -772,7 +782,7 @@ Requires: python3-six
 Requires: python3-jwcrypto >= 0.4.2
 Requires: python3-cffi
 # we need pre-requires since earlier versions may break upgrade
-Requires(pre): python3-pyldap >= 2.4.35.1-2
+Requires(pre): python3-ldap >= %{python_ldap_version}
 Requires: python3-requests
 Requires: python3-dns >= 1.15
 Requires: python3-netifaces >= 0.10.4
@@ -1131,7 +1141,7 @@ fi
 
 %posttrans server
 # don't execute upgrade and restart of IPA when server is not installed
-python2 -c "import sys; from ipaserver.install import installutils; sys.exit(0 if installutils.is_ipa_configured() else 1);" > /dev/null 2>&1
+%{python} -c "import sys; from ipaserver.install import installutils; sys.exit(0 if installutils.is_ipa_configured() else 1);" > /dev/null 2>&1
 
 if [  $? -eq 0 ]; then
     # This is necessary for Fedora system upgrades which by default
@@ -1200,7 +1210,7 @@ fi
 
 
 %posttrans server-trust-ad
-python2 -c "import sys; from ipaserver.install import installutils; sys.exit(0 if installutils.is_ipa_configured() else 1);" > /dev/null 2>&1
+%{python} -c "import sys; from ipaserver.install import installutils; sys.exit(0 if installutils.is_ipa_configured() else 1);" > /dev/null 2>&1
 if [  $? -eq 0 ]; then
 # NOTE: systemd specific section
     /bin/systemctl try-restart httpd.service >/dev/null 2>&1 || :
@@ -1251,7 +1261,7 @@ if [ $1 -gt 1 ] ; then
     fi
 
     if [ $restore -ge 2 ]; then
-        python2 -c 'from ipaclient.install.client import update_ipa_nssdb; update_ipa_nssdb()' >/var/log/ipaupgrade.log 2>&1
+        %{python} -c 'from ipaclient.install.client import update_ipa_nssdb; update_ipa_nssdb()' >/var/log/ipaupgrade.log 2>&1
     fi
 fi
 
