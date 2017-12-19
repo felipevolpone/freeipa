@@ -11,6 +11,10 @@ topologies:
     name: master_1repl_1client
     cpu: 4
     memory: 6700
+  ipaserver: &ipaserver
+    name: ipaserver
+    cpu: 1
+    memory: 2400
 
 jobs:
   fedora-27/build:
@@ -22,43 +26,58 @@ jobs:
         git_repo: '{git_repo}'
         git_refspec: '{git_refspec}'
         template: &ci-master-f27
-          name: freeipa/ci-master-f27
-          version: 1.0.2
+          name: tomaskrizek/ci-master-f27
+          version: 0.0.0
         timeout: 1800
         topology: *build
 
-  fedora-27/simple_replication:
+  fedora-27/webui_krbtpolicy:
     requires: [fedora-27/build]
     priority: 50
     job:
-      class: RunPytest
+      class: RunWebuiTests
       args:
         build_url: '{fedora-27/build_url}'
-        test_suite: test_integration/test_simple_replication.py
+        test_suite: test_webui/test_krbtpolicy.py
         template: *ci-master-f27
         timeout: 3600
-        topology: *master_1repl
+        topology: *ipaserver
 
-  fedora-27/caless:
+  fedora-27/webui_failing:
     requires: [fedora-27/build]
     priority: 50
     job:
-      class: RunPytest
+      class: RunWebuiTests
       args:
         build_url: '{fedora-27/build_url}'
-        test_suite: test_integration/test_caless.py::TestServerReplicaCALessToCAFull
+        test_suite: test_webui/test_user.py::test_user::test_crud
         template: *ci-master-f27
         timeout: 3600
-        topology: *master_1repl
+        topology: *ipaserver
 
-  fedora-27/external_ca:
+  fedora-27/py2_xmlrpc:
     requires: [fedora-27/build]
-    priority: 50
+    priority: 60
     job:
-      class: RunPytest
+      class: RunPytest2
       args:
         build_url: '{fedora-27/build_url}'
-        test_suite: test_integration/test_external_ca.py::TestExternalCA
+        test_suite: test_xmlrpc
         template: *ci-master-f27
         timeout: 3600
-        topology: *master_1repl
+        topology: *ipaserver
+        xmlrpc: True
+
+  fedora-27/py3_xmlrpc:
+    requires: [fedora-27/build]
+    priority: 60
+    job:
+      class: RunPytest3
+      args:
+        build_url: '{fedora-27/build_url}'
+        test_suite: test_xmlrpc
+        template: *ci-master-f27
+        timeout: 3600
+        topology: *ipaserver
+        xmlrpc: True
+
