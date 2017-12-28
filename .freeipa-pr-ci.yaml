@@ -27,7 +27,7 @@ jobs:
         timeout: 1800
         topology: *build
 
-  fedora-27/test_backup_and_restore:
+  fedora-27/test_backup_and_restore_TestBackupAndRestore:
     requires: [fedora-27/build]
     priority: 50
     job:
@@ -40,7 +40,7 @@ jobs:
         topology: *master_1repl
 
 
-  fedora-27/test_backup_and_restore:
+  fedora-27/test_backup_and_restore:_BaseBackupAndRestoreWithDNS:
     requires: [fedora-27/build]
     priority: 50
     job:
@@ -53,7 +53,7 @@ jobs:
         topology: *master_1repl
 
 
-  fedora-27/test_backup_and_restore:
+  fedora-27/test_backup_and_restore:_TestBackupAndRestoreWithDNS:
     requires: [fedora-27/build]
     priority: 50
     job:
@@ -66,7 +66,7 @@ jobs:
         topology: *master_1repl
 
 
-  fedora-27/test_backup_and_restore:
+  fedora-27/test_backup_and_restore:_TestBackupReinstallRestoreWithDNS:
     requires: [fedora-27/build]
     priority: 50
     job:
@@ -79,7 +79,7 @@ jobs:
         topology: *master_1repl
 
 
-  fedora-27/test_backup_and_restore:
+  fedora-27/test_backup_and_restore:_BaseBackupAndRestoreWithDNSSEC:
     requires: [fedora-27/build]
     priority: 50
     job:
@@ -92,7 +92,7 @@ jobs:
         topology: *master_1repl
 
 
-  fedora-27/test_backup_and_restore:
+  fedora-27/test_backup_and_restore:_TestBackupAndRestoreWithDNSSEC:
     requires: [fedora-27/build]
     priority: 50
     job:
@@ -105,7 +105,7 @@ jobs:
         topology: *master_1repl
 
 
-  fedora-27/test_backup_and_restore:
+  fedora-27/test_backup_and_restore:_TestBackupReinstallRestoreWithDNSSEC:
     requires: [fedora-27/build]
     priority: 50
     job:
@@ -118,7 +118,7 @@ jobs:
         topology: *master_1repl
 
 
-  fedora-27/test_backup_and_restore:
+  fedora-27/test_backup_and_restore:_TestBackupAndRestoreWithKRA:
     requires: [fedora-27/build]
     priority: 50
     job:
@@ -131,7 +131,7 @@ jobs:
         topology: *master_1repl
 
 
-  fedora-27/test_backup_and_restore:
+  fedora-27/test_backup_and_restore:_TestBackupReinstallRestoreWithKRA:
     requires: [fedora-27/build]
     priority: 50
     job:
