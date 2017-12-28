@@ -34,8 +34,111 @@ jobs:
       class: RunPytest
       args:
         build_url: '{fedora-27/build_url}'
-        test_suite:   test_integration/test_backup_and_restore.py
+        test_suite:   test_integration/test_backup_and_restore.py::TestBackupAndRestore
         template: *ci-master-f27
         timeout: 3600
         topology: *master_1repl
 
+
+  fedora-27/test_backup_and_restore:
+    requires: [fedora-27/build]
+    priority: 50
+    job:
+      class: RunPytest
+      args:
+        build_url: '{fedora-27/build_url}'
+        test_suite:   test_integration/test_backup_and_restore.py::BaseBackupAndRestoreWithDNS
+        template: *ci-master-f27
+        timeout: 3600
+        topology: *master_1repl
+
+
+  fedora-27/test_backup_and_restore:
+    requires: [fedora-27/build]
+    priority: 50
+    job:
+      class: RunPytest
+      args:
+        build_url: '{fedora-27/build_url}'
+        test_suite:   test_integration/test_backup_and_restore.py::TestBackupAndRestoreWithDNS
+        template: *ci-master-f27
+        timeout: 3600
+        topology: *master_1repl
+
+
+  fedora-27/test_backup_and_restore:
+    requires: [fedora-27/build]
+    priority: 50
+    job:
+      class: RunPytest
+      args:
+        build_url: '{fedora-27/build_url}'
+        test_suite:   test_integration/test_backup_and_restore.py::TestBackupReinstallRestoreWithDNS
+        template: *ci-master-f27
+        timeout: 3600
+        topology: *master_1repl
+
+
+  fedora-27/test_backup_and_restore:
+    requires: [fedora-27/build]
+    priority: 50
+    job:
+      class: RunPytest
+      args:
+        build_url: '{fedora-27/build_url}'
+        test_suite:   test_integration/test_backup_and_restore.py::BaseBackupAndRestoreWithDNSSEC
+        template: *ci-master-f27
+        timeout: 3600
+        topology: *master_1repl
+
+
+  fedora-27/test_backup_and_restore:
+    requires: [fedora-27/build]
+    priority: 50
+    job:
+      class: RunPytest
+      args:
+        build_url: '{fedora-27/build_url}'
+        test_suite:   test_integration/test_backup_and_restore.py::TestBackupAndRestoreWithDNSSEC
+        template: *ci-master-f27
+        timeout: 3600
+        topology: *master_1repl
+
+
+  fedora-27/test_backup_and_restore:
+    requires: [fedora-27/build]
+    priority: 50
+    job:
+      class: RunPytest
+      args:
+        build_url: '{fedora-27/build_url}'
+        test_suite:   test_integration/test_backup_and_restore.py::TestBackupReinstallRestoreWithDNSSEC
+        template: *ci-master-f27
+        timeout: 3600
+        topology: *master_1repl
+
+
+  fedora-27/test_backup_and_restore:
+    requires: [fedora-27/build]
+    priority: 50
+    job:
+      class: RunPytest
+      args:
+        build_url: '{fedora-27/build_url}'
+        test_suite:   test_integration/test_backup_and_restore.py::TestBackupAndRestoreWithKRA
+        template: *ci-master-f27
+        timeout: 3600
+        topology: *master_1repl
+
+
+  fedora-27/test_backup_and_restore:
+    requires: [fedora-27/build]
+    priority: 50
+    job:
+      class: RunPytest
+      args:
+        build_url: '{fedora-27/build_url}'
+        test_suite:   test_integration/test_backup_and_restore.py::TestBackupReinstallRestoreWithKRA
+        template: *ci-master-f27
+        timeout: 3600
+        topology: *master_1repl
