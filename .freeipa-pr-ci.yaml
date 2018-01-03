@@ -27,7 +27,7 @@ jobs:
         timeout: 1800
         topology: *build
 
-  fedora-27/test_backup_and_restore_TestBackupAndRestore:
+  TestBackupAndRestore:
     requires: [fedora-27/build]
     priority: 50
     job:
@@ -40,20 +40,7 @@ jobs:
         topology: *master_1repl
 
 
-  fedora-27/test_backup_and_restore:_BaseBackupAndRestoreWithDNS:
-    requires: [fedora-27/build]
-    priority: 50
-    job:
-      class: RunPytest
-      args:
-        build_url: '{fedora-27/build_url}'
-        test_suite:   test_integration/test_backup_and_restore.py::BaseBackupAndRestoreWithDNS
-        template: *ci-master-f27
-        timeout: 3600
-        topology: *master_1repl
-
-
-  fedora-27/test_backup_and_restore:_TestBackupAndRestoreWithDNS:
+  TestBackupAndRestoreWithDNS:
     requires: [fedora-27/build]
     priority: 50
     job:
@@ -66,7 +53,7 @@ jobs:
         topology: *master_1repl
 
 
-  fedora-27/test_backup_and_restore:_TestBackupReinstallRestoreWithDNS:
+  TestBackupReinstallRestoreWithDNS:
     requires: [fedora-27/build]
     priority: 50
     job:
@@ -79,20 +66,7 @@ jobs:
         topology: *master_1repl
 
 
-  fedora-27/test_backup_and_restore:_BaseBackupAndRestoreWithDNSSEC:
-    requires: [fedora-27/build]
-    priority: 50
-    job:
-      class: RunPytest
-      args:
-        build_url: '{fedora-27/build_url}'
-        test_suite:   test_integration/test_backup_and_restore.py::BaseBackupAndRestoreWithDNSSEC
-        template: *ci-master-f27
-        timeout: 3600
-        topology: *master_1repl
-
-
-  fedora-27/test_backup_and_restore:_TestBackupAndRestoreWithDNSSEC:
+  TestBackupAndRestoreWithDNSSEC:
     requires: [fedora-27/build]
     priority: 50
     job:
@@ -105,7 +79,7 @@ jobs:
         topology: *master_1repl
 
 
-  fedora-27/test_backup_and_restore:_TestBackupReinstallRestoreWithDNSSEC:
+  TestBackupReinstallRestoreWithDNSSEC:
     requires: [fedora-27/build]
     priority: 50
     job:
@@ -118,7 +92,7 @@ jobs:
         topology: *master_1repl
 
 
-  fedora-27/test_backup_and_restore:_TestBackupAndRestoreWithKRA:
+  TestBackupAndRestoreWithKRA:
     requires: [fedora-27/build]
     priority: 50
     job:
@@ -131,7 +105,7 @@ jobs:
         topology: *master_1repl
 
 
-  fedora-27/test_backup_and_restore:_TestBackupReinstallRestoreWithKRA:
+  TestBackupReinstallRestoreWithKRA:
     requires: [fedora-27/build]
     priority: 50
     job:
