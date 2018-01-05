@@ -65,7 +65,18 @@ def check_admin_in_ldap(host):
 def check_admin_in_cli(host):
     result = host.run_command(['ipa', 'user-show', 'admin'])
     assert 'User login: admin' in result.stdout_text, result.stdout_text
-    return result
+    new = result.stdout_text.split('\n')
+
+    # e.g: Member of groups: admins, trust admins
+    groups_field = result.stdout_text.split('\n')[9].split(':')
+    label_part = groups_field[0]  # Member of groups
+    groups_part = groups_field[1:][0]  # admins, trust admins
+
+    # ordening groups and then putting them together separated by a comma
+    groups_orderned = ','.join(sorted(groups_part.split(','), key=lambda group: group.strip()))
+    new[9] = label_part + ':' + groups_orderned
+
+    return '\n'.join(new)
 
 
 def check_admin_in_id(host):
@@ -126,8 +137,7 @@ def backup(host):
 
     # Get the backup location from the command's output
     for line in result.stderr_text.splitlines():
-        prefix = ('ipa.ipaserver.install.ipa_backup.Backup: '
-                  'INFO: Backed up to ')
+        prefix = 'ipaserver.install.ipa_backup: INFO: Backed up to'
         if line.startswith(prefix):
             backup_path = line[len(prefix):].strip()
             logger.info('Backup path for %s is %s', host, backup_path)
