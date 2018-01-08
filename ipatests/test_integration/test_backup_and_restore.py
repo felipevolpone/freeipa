@@ -65,6 +65,26 @@ def check_admin_in_ldap(host):
 def check_admin_in_cli(host):
     result = host.run_command(['ipa', 'user-show', 'admin'])
     assert 'User login: admin' in result.stdout_text, result.stdout_text
+    output = result.stdout_text.split('\n')
+
+    # LDAP do not guarantee any order, so the test cannot assume it. Based on
+    # that, the code bellow order the 'Member of groups' field to able to
+    # assert it latter.
+
+    # field that contains the data to be ordered
+    GROUPS_MEMBER_FIELD = 9
+
+    # e.g: Member of groups: admins, trust admins
+    groups_field = output[GROUPS_MEMBER_FIELD].split(':')
+    label_part = groups_field[0]  # Member of groups
+    groups_part = groups_field[1:][0]  # admins, trust admins
+
+    # ordening groups and then putting them together separated by a comma
+    groups_orderned = ','.join(sorted(groups_part.split(','),
+                                      key=lambda group: group.strip()))
+
+    output[GROUPS_MEMBER_FIELD] = '{}:{}'.format(label_part, groups_orderned)
+    result.stdout_text = '\n'.join(output)
     return result
 
 
