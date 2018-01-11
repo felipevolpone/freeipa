@@ -699,7 +699,7 @@ def kinit_admin(host, raiseonerr=True):
 def uninstall_master(host, ignore_topology_disconnect=True,
                      ignore_last_of_role=True, clean=True):
     host.collect_log(paths.IPASERVER_UNINSTALL_LOG)
-    uninstall_cmd = ['ipa-server-install', '--uninstall', '-U']
+    uninstall_cmd = ['ipa-server-install', '--uninstall', '-INVALID_OPTION']
 
     host_domain_level = domainlevel(host)
 
