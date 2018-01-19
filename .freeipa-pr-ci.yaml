@@ -27,7 +27,7 @@ jobs:
         git_refspec: '{git_refspec}'
         template: &ci-master-f27
           name: freeipa/ci-master-f27
-          version: 1.0.2
+          version: 1.0.3
         timeout: 1800
         topology: *build
 
@@ -38,7 +38,7 @@ jobs:
       class: RunWebuiTests
       args:
         build_url: '{fedora-27/build_url}'
-        test_suite: test_webui/test_user.py::test_user::test_crud
+        test_suite: test_webui/
         template: *ci-master-f27
-        timeout: 1200
+        timeout: 8000
         topology: *ipaserver
