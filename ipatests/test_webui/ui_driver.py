@@ -363,7 +363,7 @@ class UI_driver(object):
         """
         self.wait_for_request(n=2)
         if self.logged_in():
-            self.logout()
+            return
 
         if not login:
             login = self.config['ipa_admin']
@@ -382,14 +382,15 @@ class UI_driver(object):
         self.wait_for_request(n=2)
 
         # reset password if needed
-        newpw_tb = self.find("//input[@type='password'][@name='new_password']", 'xpath', auth)
-        verify_tb = self.find("//input[@type='password'][@name='verify_password']", 'xpath', auth)
-        if newpw_tb and newpw_tb.is_displayed():
-            newpw_tb.send_keys(new_password)
-            verify_tb.send_keys(new_password)
-            verify_tb.send_keys(Keys.RETURN)
-            self.wait(0.5)
-            self.wait_for_request(n=2)
+        if self.get_login_screen():
+            newpw_tb = self.find("//input[@type='password'][@name='new_password']", 'xpath', auth)
+            verify_tb = self.find("//input[@type='password'][@name='verify_password']", 'xpath', auth)
+            if newpw_tb and newpw_tb.is_displayed():
+                newpw_tb.send_keys(new_password)
+                verify_tb.send_keys(new_password)
+                verify_tb.send_keys(Keys.RETURN)
+                self.wait(0.5)
+                self.wait_for_request(n=2)
 
     def logged_in(self):
         """
@@ -407,7 +408,7 @@ class UI_driver(object):
         """
         Get reference of login screen
         """
-        return self.find('rcue-login-screen', 'id')
+        return self.find('.login-pf', By.CSS_SELECTOR)
 
     def login_screen_visible(self):
         """
