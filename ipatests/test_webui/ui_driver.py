@@ -46,6 +46,7 @@ try:
     from selenium.webdriver.common.by import By
     from selenium.webdriver.chrome.options import Options as ChromeOptions
     from selenium.webdriver.support.wait import WebDriverWait
+    from selenium.webdriver.common.action_chains import ActionChains
     from selenium.webdriver.support.ui import Select
     NO_SELENIUM = False
 except ImportError:
@@ -353,15 +354,25 @@ class UI_driver(object):
         """
         Navigate to Web UI first page and wait for loading of all dependencies.
         """
+
+        ipa_logo = self.find('.navbar-brand', By.CSS_SELECTOR)
+        if ipa_logo and ipa_logo.is_displayed():
+            # the link is not clickable
+            ActionChains(self.driver).move_to_element(ipa_logo).click().perform()
+            return
+
+        if self.login_screen_visible():
+            return # already on the first page
+
         self.driver.get(self.get_base_url())
         runner = self
         WebDriverWait(self.driver, 10).until(lambda d: runner.files_loaded())
+        self.wait_for_request()
 
     def login(self, login=None, password=None, new_password=None):
         """
         Log in if user is not logged in.
         """
-        self.wait_for_request(n=2)
         if self.logged_in():
             return
 
@@ -403,6 +414,7 @@ class UI_driver(object):
 
     def logout(self):
         self.profile_menu_action('logout')
+        assert self.login_screen_visible()
 
     def get_login_screen(self):
         """
