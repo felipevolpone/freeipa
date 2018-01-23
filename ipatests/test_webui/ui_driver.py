@@ -382,7 +382,7 @@ class UI_driver(object):
         self.wait_for_request(n=2)
 
         # reset password if needed
-        if self.get_login_screen():
+        if self.login_screen_visible():
             newpw_tb = self.find("//input[@type='password'][@name='new_password']", 'xpath', auth)
             verify_tb = self.find("//input[@type='password'][@name='verify_password']", 'xpath', auth)
             if newpw_tb and newpw_tb.is_displayed():
