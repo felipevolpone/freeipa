@@ -27,38 +27,62 @@ jobs:
         timeout: 1800
         topology: *build
 
-  fedora-27/simple_replication:
+  fedora-27/TestBackupAndRestore:
     requires: [fedora-27/build]
     priority: 50
     job:
       class: RunPytest
       args:
         build_url: '{fedora-27/build_url}'
-        test_suite: test_integration/test_simple_replication.py
+        test_suite: test_integration/test_backup_and_restore.py::TestBackupAndRestore
         template: *ci-master-f27
-        timeout: 3600
+        timeout: 7200
         topology: *master_1repl
 
-  fedora-27/caless:
+  fedora-27/TestBackupAndRestoreWithDNS:
     requires: [fedora-27/build]
     priority: 50
     job:
       class: RunPytest
       args:
         build_url: '{fedora-27/build_url}'
-        test_suite: test_integration/test_caless.py::TestServerReplicaCALessToCAFull
+        test_suite: test_integration/test_backup_and_restore.py::TestBackupAndRestoreWithDNS
         template: *ci-master-f27
-        timeout: 3600
+        timeout: 7200
         topology: *master_1repl
 
-  fedora-27/external_ca:
+  fedora-27/TestBackupReinstallRestoreWithDNS:
     requires: [fedora-27/build]
     priority: 50
     job:
       class: RunPytest
       args:
         build_url: '{fedora-27/build_url}'
-        test_suite: test_integration/test_external_ca.py
+        test_suite: test_integration/test_backup_and_restore.py::TestBackupReinstallRestoreWithDNS
         template: *ci-master-f27
-        timeout: 3600
+        timeout: 7200
         topology: *master_1repl
+
+  fedora-27/TestBackupAndRestoreWithKRA:
+    requires: [fedora-27/build]
+    priority: 50
+    job:
+      class: RunPytest
+      args:
+        build_url: '{fedora-27/build_url}'
+        test_suite: test_integration/test_backup_and_restore.py::TestBackupAndRestoreWithKRA
+        template: *ci-master-f27
+        timeout: 7200
+        topology: *master_1repl        
+
+  fedora-27/TestBackupReinstallRestoreWithKRA:
+    requires: [fedora-27/build]
+    priority: 50
+    job:
+      class: RunPytest
+      args:
+        build_url: '{fedora-27/build_url}'
+        test_suite: test_integration/test_backup_and_restore.py::TestBackupReinstallRestoreWithKRA
+        template: *ci-master-f27
+        timeout: 7200
+        topology: *master_1repl    
