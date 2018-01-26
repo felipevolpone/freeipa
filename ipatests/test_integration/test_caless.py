@@ -157,14 +157,6 @@ class CALessBase(IntegrationTest):
                 host.transport.put_file(source, dest)
 
     @classmethod
-    def uninstall(cls, mh):
-        # Remove the NSS database
-        shutil.rmtree(cls.cert_dir)
-        for host in cls.get_all_hosts():
-            tasks.uninstall_master(host)
-        super(CALessBase, cls).uninstall(mh)
-
-    @classmethod
     def install_server(cls, host=None,
                        http_pkcs12='server.p12', dirsrv_pkcs12='server.p12',
                        http_pkcs12_exists=True, dirsrv_pkcs12_exists=True,
