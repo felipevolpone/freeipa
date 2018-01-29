@@ -12,7 +12,7 @@ topologies:
     cpu: 4
     memory: 6700
   master_2repl_1client: &master_2repl_1client
-    name: master_1repl_1client
+    name: master_2repl_1client
     cpu: 5
     memory: 9500
 
@@ -38,7 +38,7 @@ jobs:
       class: RunPytest
       args:
         build_url: '{fedora-27/build_url}'
-        test_suite: test_integration/test_server_del.py
+        test_suite: test_integration/test_server_del.py::TestLastServices::test_removal_of_master_raises_error_about_last_ca
         template: *ci-master-f27
         timeout: 8000
         topology: *master_2repl_1client
