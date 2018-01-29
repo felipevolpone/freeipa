@@ -252,24 +252,17 @@ class TestLastServices(ServerDelBase):
             1
         )
 
-    def test_install_dns_on_replica1_and_dnssec_on_master(self):
+    def test_install_dns_on_replica1(self):
         """
         install DNS server on replica and DNSSec on master
         """
         tasks.install_dns(self.replicas[0])
-        args = [
-            "ipa-dns-install",
-            "--dnssec-master",
-            "--forwarder", self.master.config.dns_forwarder,
-            "-U",
-        ]
-        self.master.run_command(args)
 
     def test_removal_of_master_raises_error_about_last_ca(self):
         """
         test that removal of master fails on the last
         """
-        tasks.install_dns(self.master)
+        tasks.install_dns(self.master, raiseonerr=False)
         tasks.assert_error(
             tasks.run_server_del(self.replicas[0], self.master.hostname),
             "Deleting this server is not allowed as it would leave your "
@@ -282,7 +275,18 @@ class TestLastServices(ServerDelBase):
         Install CA on replica so that we can test DNS-related checks
         """
         tasks.install_ca(self.replicas[0], domain_level=self.domain_level)
-
+        
+    def test_install_dnssec_on_master(self):
+        """
+        install DNS server on replica and DNSSec on master
+        """
+        args = [
+            "ipa-dns-install",
+            "--dnssec-master",
+            "--forwarder", self.master.config.dns_forwarder,
+            "-U",
+        ]
+        self.master.run_command(args)
 
     def test_removal_of_master_raises_error_about_dnssec(self):
         tasks.assert_error(
