@@ -269,6 +269,7 @@ class TestLastServices(ServerDelBase):
         """
         test that removal of master fails on the last
         """
+        tasks.install_dns(self.master)
         tasks.assert_error(
             tasks.run_server_del(self.replicas[0], self.master.hostname),
             "Deleting this server is not allowed as it would leave your "
