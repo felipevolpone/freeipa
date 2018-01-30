@@ -38,7 +38,7 @@ jobs:
       class: RunPytest
       args:
         build_url: '{fedora-27/build_url}'
-        test_suite: test_integration/test_server_del.py::TestLastServices
+        test_suite: test_integration/test_server_del.py
         template: *ci-master-f27
         timeout: 8000
         topology: *master_2repl_1client
