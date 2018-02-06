@@ -23,6 +23,7 @@ FreeIPA:
 * Uses an advanced grouping mechanism to restrict network access to services
   and files only to specific users
 * Allows central management of security mechanisms like passwords,
+
   SSH Public Keys, SUDO rules, Keytabs, Access Control Rules
 * Enables delegation of selected administrative tasks to other power users
 * Integrates into Active Directory environments
