@@ -17,6 +17,7 @@ cross-realm Kerberos trust or user synchronization.
 FreeIPA:
 
 * Allows all your users to access all the machines with the same credentials
+
   and security settings
 * Allows users to access personal files transparently from any machine in
   an authenticated and secure way
