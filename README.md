@@ -25,6 +25,9 @@ FreeIPA:
 * Allows central management of security mechanisms like passwords,
   SSH Public Keys, SUDO rules, Keytabs, Access Control Rules
 * Enables delegation of selected administrative tasks to other power users
+
+r1
+
 * Integrates into Active Directory environments
 
 ## Components
