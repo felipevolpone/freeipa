@@ -17,22 +17,8 @@ topologies:
     memory: 8000
 
 jobs:
-  fedora-27/build:
-    requires: []
-    priority: 100
-    job:
-      class: Build
-      args:
-        git_repo: '{git_repo}'
-        git_refspec: '{git_refspec}'
-        template: &ci-master-f27
-          name: freeipa/ci-master-f27
-          version: 1.0.2
-        timeout: 1800
-        topology: *build
-
   fedora-27/ad_tests:
-    requires: [fedora-27/build]
+    requires: []
     priority: 50
     job:
       class: RunPytest
