@@ -25,7 +25,8 @@ jobs:
       args:
         build_url: '{fedora-27/build_url}'
         test_suite: test_integration/test_idviews.py
-        template: *ci-master-f27
+        template: &ci-master-f27
+          name: freeipa/ci-master-f27
+          version: 1.0.2
         timeout: 8000
         topology: *ad
-
