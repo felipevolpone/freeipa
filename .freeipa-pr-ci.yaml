@@ -23,7 +23,7 @@ jobs:
     job:
       class: RunPytest
       args:
-        build_url: '{fedora-27/build_url}'
+        build_url: 'https://fedorapeople.org/groups/freeipa/prci/jobs/213c53fa-26ee-11e8-b1d0-fa163eac2e4f/rpms/freeipa-prci.repo'
         test_suite: test_integration/test_idviews.py
         template: &ci-master-f27
           name: freeipa/ci-master-f27
