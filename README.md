@@ -1,4 +1,3 @@
-
 # FreeIPA Server
 
 FreeIPA allows Linux administrators to centrally manage identity,
