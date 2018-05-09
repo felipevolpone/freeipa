@@ -2906,7 +2906,7 @@ class dnszone_mod(DNSZoneBase_mod):
         self.obj._rr_zone_postprocess(entry_attrs, **options)
 
 
-        named_regular = services.service('named-regular', api)
+        named_regular = services.service('named-pkcs11', api)
         named_regular.restart()
         return dn
 
