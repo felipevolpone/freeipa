@@ -187,6 +187,8 @@ class TestInstallDNSSECLast(IntegrationTest):
             self.replicas[0].ip, test_zone, timeout=200
         ), "DNS zone %s is not signed (replica)" % test_zone
 
+        tasks.restart_named(self.master)
+
         dnskey_new = resolve_with_dnssec(self.master.ip, test_zone,
                                          rtype="DNSKEY").rrset
         assert dnskey_old != dnskey_new, "DNSKEY should be different"
@@ -233,6 +235,8 @@ class TestInstallDNSSECLast(IntegrationTest):
         assert wait_until_record_is_signed(
             self.replicas[0].ip, test_zone_repl, timeout=200
         ), "DNS zone %s is not signed (replica)" % test_zone_repl
+
+        tasks.restart_named(self.master)
 
         dnskey_new = resolve_with_dnssec(self.replicas[0].ip, test_zone_repl,
                                          rtype="DNSKEY").rrset
@@ -327,6 +331,8 @@ class TestInstallDNSSECFirst(IntegrationTest):
             "--ns-rec=" + self.master.hostname
         ]
         self.master.run_command(args)
+        tasks.restart_named(self.master)
+
         # wait until zone is signed
         assert wait_until_record_is_signed(
             self.master.ip, example_test_zone, timeout=100
