@@ -146,6 +146,7 @@ class TestInstallDNSSECLast(IntegrationTest):
 
     def test_disable_reenable_signing_master(self):
 
+        tasks.kinit_admin(self.master)
         dnskey_old = resolve_with_dnssec(self.master.ip, test_zone,
                                          rtype="DNSKEY").rrset
 
