@@ -187,7 +187,6 @@ class TestInstallDNSSECLast(IntegrationTest):
             self.replicas[0].ip, test_zone, timeout=200
         ), "DNS zone %s is not signed (replica)" % test_zone
 
-        tasks.restart_named(self.master)
 
         dnskey_new = resolve_with_dnssec(self.master.ip, test_zone,
                                          rtype="DNSKEY").rrset

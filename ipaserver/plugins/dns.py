@@ -2904,6 +2904,10 @@ class dnszone_mod(DNSZoneBase_mod):
         dn = super(dnszone_mod, self).post_callback(ldap, dn, entry_attrs,
                                                     *keys, **options)
         self.obj._rr_zone_postprocess(entry_attrs, **options)
+
+
+        named_regular = services.service('named-regular', api)
+        named_regular.restart()
         return dn
 
 
