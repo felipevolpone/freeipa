@@ -31,14 +31,39 @@ jobs:
         timeout: 1800
         topology: *build
 
-  fedora-27/test_topology:
+  fedora-27/test_topology_1:
     requires: [fedora-27/build]
     priority: 50
     job:
       class: RunPytest
       args:
         build_url: '{fedora-27/build_url}'
-        test_suite: test_integration/test_topology.py
+        test_suite: test_integration/test_topology.py::TestCASpecificRUVs
         template: *ci-master-f27
-        timeout: 16000
+        timeout: 7200
         topology: *master_3repl_1client
+
+  fedora-27/test_topology_2:
+    requires: [fedora-27/build]
+    priority: 50
+    job:
+      class: RunPytest
+      args:
+        build_url: '{fedora-27/build_url}'
+        test_suite: test_integration/test_topology.py::TestTopologyOptions
+        template: *ci-master-f27
+        timeout: 7200
+        topology: *master_3repl_1client
+
+  fedora-27/test_topology_3:
+    requires: [fedora-27/build]
+    priority: 50
+    job:
+      class: RunPytest
+      args:
+        build_url: '{fedora-27/build_url}'
+        test_suite: test_integration/test_topology.py::TestReplicaManageDel
+        template: *ci-master-f27
+        timeout: 7200
+        topology: *master_3repl_1client
+
